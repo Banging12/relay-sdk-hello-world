@@ -1,10 +1,12 @@
 import hre from "hardhat";
 import { Interface } from "ethers/lib/utils";
 import { RelaySDK } from "@gelatonetwork/relay-sdk";
-import helloWorldContract from "../contracts/abis/HelloWorld.json";
-import { ETH_ADDRESS } from "../constants";
+import helloWorldAbi from "../contracts/abis/HelloWorld.json";
+import { getAddressBookByNetwork } from "../constants";
 
 async function main() {
+  const { ETH, HELLO_WORLD } = getAddressBookByNetwork(hre.network.name);
+
   // Verify that current network is supported by Gelato Multichain Relay
   const chainId = hre.network.config.chainId ?? 0;
   const isChainSupported = await RelaySDK.isChainSupported(chainId);
@@ -14,19 +16,17 @@ async function main() {
   }
 
   // Generate the function data
-  const helloWorldInterface = new Interface(helloWorldContract.abi);
+  const helloWorld = new Interface(helloWorldAbi);
   const relayFees = 21000;
-  const data = helloWorldInterface.encodeFunctionData("helloWorld", [
-    relayFees,
-  ]);
+  const data = helloWorld.encodeFunctionData("helloWorld", [relayFees, ETH]);
 
   // Send our tx to Gelato Relay
   console.log(`Sending Hello World tx to Gelato Relay...`);
   const relayTx = await RelaySDK.sendRelayTransaction(
     chainId,
-    helloWorldContract.address,
+    HELLO_WORLD, // Smart contract address
     data,
-    ETH_ADDRESS, // Payment token
+    ETH, // Payment token address
     relayFees.toString()
   );
   console.log(`RelayTransaction Id: ${relayTx.taskId}`);
