@@ -8,22 +8,20 @@ import "@nomiclabs/hardhat-ethers";
 import * as dotenv from "dotenv";
 dotenv.config({ path: __dirname + "/.env" });
 
-const PROVIDER_URL = process.env.PROVIDER_URL ?? "";
+const ALCHEMY_ID = process.env.ALCHEMY_ID ?? "";
 
 const config: HardhatUserConfig = {
   defaultNetwork: "ropsten",
 
   networks: {
-    hardhat: {
-      forking: {
-        url: PROVIDER_URL,
-        blockNumber: 10911528,
-      },
-    },
-
     ropsten: {
       chainId: 3,
-      url: PROVIDER_URL,
+      url: `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_ID}`,
+    },
+
+    matic: {
+      chainId: 137,
+      url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_ID}`,
     },
   },
 
