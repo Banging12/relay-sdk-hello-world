@@ -6,7 +6,9 @@
     "format": "prettier --write '*/**/*.*{js,json,md,ts}'",
     "format:check": "prettier --check '*/**/*.*{js,json,md,ts}'",
     "lint": "eslint -c .eslintrc.json --ext \"**/*.ts\" \"**/*.test.ts\"",
-    "send-tx": "npx hardhat run --network ropsten scripts/send-tx.ts",
+    "send-tx": "npx hardhat run examples/send-tx.ts",
+    "send-tx-oracle": "npx hardhat run examples/send-tx-oracle.ts",
+    "send-tx-usdc": "npx hardhat run examples/send-tx-usdc.ts",
     "test": "npx hardhat test"
   },
   "license": "ISC",
