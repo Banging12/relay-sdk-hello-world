@@ -3,6 +3,7 @@ import { Interface } from "ethers/lib/utils";
 import { RelaySDK } from "@gelatonetwork/relay-sdk";
 import helloWorldAbi from "../contracts/abis/HelloWorld.json";
 import { getAddressBookByNetwork } from "../constants";
+import { BigNumber } from "ethers/lib/ethers";
 
 async function main() {
   const { ETH, HELLO_WORLD } = getAddressBookByNetwork(hre.network.name);
@@ -17,7 +18,7 @@ async function main() {
 
   // Generate the function data
   const helloWorld = new Interface(helloWorldAbi);
-  const relayFees = 21000;
+  const relayFees = BigNumber.from(21000);
   const data = helloWorld.encodeFunctionData("helloWorld", [relayFees, ETH]);
 
   // Send our tx to Gelato Relay
@@ -27,7 +28,7 @@ async function main() {
     HELLO_WORLD, // Smart contract address
     data,
     ETH, // Payment token address
-    relayFees.toString()
+    relayFees
   );
   console.log(`RelayTransaction Id: ${relayTx.taskId}`);
 }

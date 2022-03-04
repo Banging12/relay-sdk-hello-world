@@ -38,7 +38,7 @@ async function main() {
   const estimatedFees: BigNumber = await RelaySDK.getEstimatedFee(
     chainId,
     ETH,
-    gasLimit.toNumber(),
+    gasLimit,
     false // Set to true for high priority fees
   );
 
@@ -55,7 +55,7 @@ async function main() {
     HELLO_WORLD, // Smart contract address
     data,
     ETH, // Payment token address
-    estimatedFees.toString()
+    estimatedFees
   );
   console.log(`RelayTransaction Id: ${relayTx.taskId}`);
 }
