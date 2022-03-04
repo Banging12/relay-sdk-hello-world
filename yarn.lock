@@ -889,10 +889,10 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@gelatonetwork/relay-sdk@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@gelatonetwork/relay-sdk/-/relay-sdk-0.0.6.tgz#01a5c31f4fc7118a0664f585612010e5f6bfb207"
-  integrity sha512-AGO9mYKrQEeyM1dmynR6h+P/yD03eCl3GvpJa6Jyu10uzO6z/yijBiHFKZ9V7k7h/mN+iq1wHFcfuoS6GB/PVQ==
+"@gelatonetwork/relay-sdk@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@gelatonetwork/relay-sdk/-/relay-sdk-0.1.0.tgz#d49b81fea3a9ec9a914423b56694e115d57b8c2a"
+  integrity sha512-U5oeMMXykfp9PPZVvmDyJ2nlLWP39cLR3qat02eeWdWcJHWOy3qyVl4L5Y3oZ8tnGkKfDL5AxkUiH3JsIku+UQ==
   dependencies:
     axios "^0.24.0"
     chai "^4.3.6"

@@ -39,6 +39,6 @@
     "*.*{ts,js}": "eslint -c .eslintrc.json"
   },
   "dependencies": {
-    "@gelatonetwork/relay-sdk": "^0.0.6"
+    "@gelatonetwork/relay-sdk": "^0.1.0"
   }
 }
