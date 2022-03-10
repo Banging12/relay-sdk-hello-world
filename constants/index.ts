@@ -42,6 +42,16 @@ export const getAddressBookByNetwork = (network: string) => {
         USDC: "0x4dbcdf9b62e891a7cec5a2568c3f4faf9e8abe2b",
       };
 
+    case "mumbai":
+      return {
+        GELATO: "0x69623a227Cf0aFF37C3c60f5cd74bfed04377c79",
+        GELATO_RELAY: "0x25aD59adbe00C2d80c86d01e2E05e1294DA84823",
+        GELATO_RELAY_TRANSIT: "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
+        HELLO_WORLD: "0x0FE88cA117b03A7D399198d6C53502501A6EF63E",
+        ETH: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        USDC: "",
+      };
+
     default: {
       throw new Error(`addressBooks: network: ${network} not supported`);
     }

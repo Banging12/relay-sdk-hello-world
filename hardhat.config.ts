@@ -33,6 +33,11 @@ const config: HardhatUserConfig = {
       chainId: 137,
       url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_ID}`,
     },
+
+    mumbai: {
+      chainId: 80001,
+      url: `https://rpc-mumbai.maticvigil.com/`,
+    },
   },
 
   solidity: {
