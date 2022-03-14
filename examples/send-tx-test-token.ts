@@ -18,20 +18,13 @@ async function main() {
   }
 
   // Estimate gas limit for our helloWorld call
-  const helloWorld = new Contract(
-    HELLO_WORLD,
-    helloWorldAbi,
-    hre.ethers.provider
-  );
+  const helloWorld = new Contract(HELLO_WORLD, helloWorldAbi, hre.ethers.provider);
   const gasLimit: BigNumber = await helloWorld
     .connect(GELATO_RELAY_TRANSIT) // Gelato relay transit will be our contract caller
     .estimateGas.helloWorld(1, USDC);
 
   // Encode our function call
-  const data = helloWorld.interface.encodeFunctionData("helloWorld", [
-    gasLimit,
-    USDC,
-  ]);
+  const data = helloWorld.interface.encodeFunctionData("helloWorld", [gasLimit, USDC]);
 
   // Send our tx to Gelato Relay using
   console.log(`Sending Hello World tx to Gelato Relay...`);
