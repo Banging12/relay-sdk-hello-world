@@ -1,15 +1,14 @@
 /* eslint-disable no-case-declarations */
 import hre from "hardhat";
-import { RelaySDK } from "@gelatonetwork/relay-sdk";
+import { Interface } from "ethers/lib/utils";
+import { RelaySDK, TransactionStatus, TaskState } from "@gelatonetwork/relay-sdk";
 import helloWorldAbi from "../contracts/abis/HelloWorld.json";
 import { getAddressBookByNetwork } from "../constants";
-import { BigNumber, Contract } from "ethers";
-import { TransactionStatus } from "@gelatonetwork/relay-sdk";
-import { TaskState } from "@gelatonetwork/relay-sdk";
+import { BigNumber } from "ethers/lib/ethers";
 import { setTimeout as sleep } from "timers/promises";
 
 async function main() {
-  const { USDC, HELLO_WORLD, GELATO_RELAY_TRANSIT } = getAddressBookByNetwork(hre.network.name);
+  const { ETH, HELLO_WORLD } = getAddressBookByNetwork(hre.network.name);
 
   // Verify that current network is supported by Gelato Multichain Relay
   const chainId = hre.network.config.chainId ?? 0;
@@ -19,29 +18,26 @@ async function main() {
     return;
   }
 
-  // Estimate gas limit for our helloWorld call
-  const helloWorld = new Contract(HELLO_WORLD, helloWorldAbi, hre.ethers.provider);
-  const gasLimit: BigNumber = await helloWorld
-    .connect(GELATO_RELAY_TRANSIT) // Gelato relay transit will be our contract caller
-    .estimateGas.helloWorld(1, USDC);
+  // Generate the function data
+  const helloWorld = new Interface(helloWorldAbi);
+  const relayFees = BigNumber.from(1);
+  const data = helloWorld.encodeFunctionData("helloWorld", [relayFees, ETH]);
 
-  // Encode our function call
-  const data = helloWorld.interface.encodeFunctionData("helloWorld", [gasLimit, USDC]);
-
-  // Send our tx to Gelato Relay using
+  // Send our tx to Gelato Relay
   console.log(`Sending Hello World tx to Gelato Relay...`);
-  const relayTx = await RelaySDK.sendRelayTransaction(
+  const { taskId } = await RelaySDK.sendRelayTransaction(
     chainId,
     HELLO_WORLD, // Smart contract address
     data,
-    USDC, // Payment token address
-    gasLimit
+    ETH, // Payment token address
+    relayFees
   );
-  console.log(`RelayTransaction Id: ${relayTx.taskId}`);
+  console.log(`RelayTransaction Id: ${taskId}`);
 
+  // Fetch task status to wait for its execution
   let isComplete = false;
   do {
-    const status: TransactionStatus | undefined = await RelaySDK.getTaskStatus(relayTx.taskId);
+    const status: TransactionStatus | undefined = await RelaySDK.getTaskStatus(taskId);
     if (status) {
       const { taskState, lastCheck } = status as TransactionStatus;
       switch (taskState) {

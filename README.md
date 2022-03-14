@@ -105,3 +105,38 @@ const estimatedFees: BigNumber = await RelaySDK.getEstimatedFee(
 yarn send-tx-usdc --network matic
 ```
 <br/>
+
+
+## 4. Check your task status
+
+- Use `RelaySDK.getTaskStatus` to retrieve your task execution status:
+```ts
+const status = await RelaySDK.getTaskStatus(taskId);
+if (status) {
+  const state = (status as TransactionStatus).taskState;
+  switch (state) {
+    case TaskState.CheckPending:
+      console.log(`> Task pending relayer verification`);
+      break;
+    case TaskState.ExecPending:
+      console.log(`> Task queued for execution`);
+      break;
+    case TaskState.ExecSuccess:
+      console.log(`> Task successfully executed, tx hash: ${status.execution?.transactionHash}`);
+      break;
+    case TaskState.ExecReverted:
+      console.log(`> Task was reverted with message: ${status.lastCheck?.message}`);
+      break;
+    case TaskState.Cancelled:
+      console.log(`> Task was cancelled with message: ${status.lastCheck?.message}`);
+      break;
+    default:
+      console.log(`> Task status: ${state}`);
+  }
+```
+
+- Check the example source code [`examples/tx-status.ts`](./examples/tx-status.ts) and try it yourself using:
+```
+yarn tx-status --network matic
+```
+<br/>

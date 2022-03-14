@@ -10,7 +10,7 @@
     "send-tx-oracle": "npx hardhat run examples/send-tx-oracle.ts",
     "send-tx-test-token": "npx hardhat run examples/send-tx-test-token.ts",
     "send-tx-usdc": "npx hardhat run examples/send-tx-usdc.ts",
-    "test": "npx hardhat test"
+    "tx-status": "npx hardhat run examples/tx-status.ts"
   },
   "license": "ISC",
   "devDependencies": {
