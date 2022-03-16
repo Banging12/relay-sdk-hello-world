@@ -43,7 +43,7 @@ async function main() {
       switch (taskState) {
         case TaskState.CheckPending:
           console.log(`> Task pending relayer verification`);
-          if (lastCheck) console.log(`>> Last check message: ${lastCheck.message}`);
+          if (lastCheck?.message) console.log(`>> Last check message: ${lastCheck.message}`);
           if (lastCheck?.reason) console.log(`>> Last check reason: ${lastCheck.reason}`);
           break;
         case TaskState.ExecPending:
