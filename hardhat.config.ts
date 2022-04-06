@@ -29,6 +29,11 @@ const config: HardhatUserConfig = {
       url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_ID}`,
     },
 
+    kovan: {
+      chainId: 42,
+      url: `https://eth-kovan.alchemyapi.io/v2/${ALCHEMY_ID}`,
+    },
+
     matic: {
       chainId: 137,
       url: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_ID}`,
@@ -37,6 +42,10 @@ const config: HardhatUserConfig = {
     mumbai: {
       chainId: 80001,
       url: `https://rpc-mumbai.maticvigil.com/`,
+    },
+    boba: {
+      chainId: 288,
+      url: `https://mainnet.boba.network`,
     },
   },
 
